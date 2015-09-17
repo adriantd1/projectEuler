@@ -1,0 +1,8 @@
+import java.util.*;
+
+/*  This program answers problem 10 of projecteuler.com: Find the sum of all the primes 
+ *  below two million. */
+
+public class Problem10{
+
+}
