@@ -8,11 +8,12 @@ public class Problem12{
 
 	public static void main(String[] args){
 		// Use the sieve method to find the prime numbers under 100000
-		boolean[] prime = new boolean[100000];
+		// The index of each prime number will be set to false
+		boolean[] prime = new boolean[5000000];
 		long sum = 0l;
 
-		prime[0] = true;
-		prime[1] = true;
+		prime[0]=true;
+		prime[1]=true;
 		
 		int j = 0;
 		for(int i = 2; i<prime.length; i++){
@@ -27,18 +28,59 @@ public class Problem12{
 			}
 		}
 
-		for(int i = 0; i<prime.length; i++){
-			if(!prime[i]){
-				sum = sum + i;
-			}
-		}
-
 		/* Using the prime numbers previously found, calculate the number of divisors of 
-		 * each triangle number */
+		 * each triangle number using the tau function */
+		int index = 2;
 		int n = 10;
-		int triangle = 0;		
+		int triangle = 0;
+		int divisors = 1;
 
-		while(true)
+		//will keep count of how many times the triangle number can be divided by each prime
+		int power = 1;
+
+		//store the powers of the prime factors of the triangle number
+		ArrayList<Integer> factors_power = new ArrayList<Integer>();		
+
+		boolean condition = true;
+		while(condition){
+			//calculated the nth triangle number
+			for(int i = 1; i<=n; i++){
+				triangle = triangle + i;
+			}
+			//System.out.print(triangle + " ");
+
+			while(triangle != 1){
+				// if the number is prime and smaller than the triangle number
+				if(!prime[index] && index<=triangle){
+					//check if a prime divide the triangle number
+					while(triangle % index == 0){
+						//System.out.println("." +index);
+						triangle = triangle/index;
+						power++;
+					}
+					if(power>1){
+						factors_power.add(power);
+					}
+				}
+				index++;
+				power = 1;
+			}
+			for(int pow : factors_power){
+				divisors = divisors * pow;
+			}
+			if(divisors >= 500){
+				for(int i = 1; i<=n; i++){
+					triangle = triangle + i;
+				}
+				System.out.println(triangle);
+				condition = false;
+			}
+			triangle = 0;
+			n++;
+			factors_power.clear();
+			divisors = 1;
+			index = 2;
+		}
 
 	}	
 	
